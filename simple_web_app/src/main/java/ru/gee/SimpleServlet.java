@@ -26,7 +26,7 @@ public class SimpleServlet implements Servlet {
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         logger.info("Request received");
 
-        servletResponse.getWriter().println("<h1>If you see this servlet works!</h1>");
+        servletResponse.getWriter().println("<h1>If you see this, servlet works!</h1>");
     }
 
     @Override
