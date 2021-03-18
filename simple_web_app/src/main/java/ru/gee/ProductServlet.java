@@ -33,7 +33,9 @@ public class ProductServlet extends HttpServlet {
 
             for (Product product : productRepository.findAll()) {
                 resp.getWriter().println("<tr>");
-                resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/product?id=" + product.getId() + "'>" + product.getId() + "</a></td>");
+                resp.getWriter()
+                        .println("<td><a href='" + getServletContext().getContextPath()
+                                + req.getServletPath() + "/" + product.getId() + "'>" + product.getId() + "</a></td>");
                 resp.getWriter().println("<td>" + product.getName() + "</td>");
                 resp.getWriter().println("<td>" + product.getDescription() + "</td>");
                 resp.getWriter().println("<td>" + product.getPrice() + "</td>");
@@ -42,7 +44,7 @@ public class ProductServlet extends HttpServlet {
             resp.getWriter().println("</table>");
         } else {
             String idString = req.getPathInfo().substring(1);
-            Long id = null;
+            long id;
             try {
                 id = Long.parseLong(idString);
             } catch (NumberFormatException e) {
