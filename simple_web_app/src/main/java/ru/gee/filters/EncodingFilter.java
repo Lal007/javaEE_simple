@@ -1,4 +1,4 @@
-package ru.gee.file;
+package ru.gee.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
