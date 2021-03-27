@@ -1,2 +1,4 @@
-/simple_web_app/target/
-/.idea/
+out/
+target/
+/.idea
+*.iml
