@@ -29,16 +29,6 @@
                 </thead>
                 <tbody>
 
-<%--                <%!--%>
-<%--                    private ProductRepository productRepository;--%>
-
-<%--                    @Override--%>
-<%--                    public void jspInit() {--%>
-<%--                        productRepository = (ProductRepository) getServletContext().getAttribute("productRepository");--%>
-<%--                    }--%>
-<%--                %>--%>
-
-
                 <c:choose>
                     <c:when test="${requestScope.products.isEmpty()}">
                         <tr>
