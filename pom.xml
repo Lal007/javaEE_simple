@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>simple_web_app</module>
+        <module>simple_jsf_app</module>
     </modules>
 
     <groupId>ru.ee_simple_apps</groupId>
