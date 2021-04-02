@@ -3,13 +3,13 @@ package ru.gee.controller;
 import ru.gee.persist.Product;
 import ru.gee.persist.ProductRepository;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class ProductController implements Serializable {
 
@@ -35,8 +35,9 @@ public class ProductController implements Serializable {
         return "/product_form.xhtml?faces-redirect=true";
     }
 
-    public void deleteProduct(Product product) {
+    public String deleteProduct(Product product) {
         productRepository.delete(product.getId());
+        return "/product.xhtml?faces-redirect=true";
     }
 
     public String saveProduct() {
