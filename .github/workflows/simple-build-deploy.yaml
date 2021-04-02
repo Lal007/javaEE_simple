@@ -30,6 +30,7 @@ jobs:
       - name: Build with Maven
         id: mvn_build_2
         run: |
+          ls
           cd simple-jsf-app
           mvn --batch-mode clean install wildfly:undeploy wildfly:deploy \
           -Dwildfly.hostname=${{ secrets.WILDFLY_REMOTE_HOST }} \
