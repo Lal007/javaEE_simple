@@ -51,6 +51,7 @@ public class ProductRepository {
         em.merge(product);
     }
 
+    @Transactional
     public void delete(Long id) {
         em.createNamedQuery("deleteProductById")
                 .setParameter("id", id)
