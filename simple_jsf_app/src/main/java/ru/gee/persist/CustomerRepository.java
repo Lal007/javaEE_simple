@@ -69,6 +69,6 @@ public class CustomerRepository {
     }
 
     public long count() {
-        return em.createNamedQuery("count", Long.class).getSingleResult();
+        return em.createNamedQuery("countCustomer", Long.class).getSingleResult();
     }
 }
