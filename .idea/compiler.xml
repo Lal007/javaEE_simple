@@ -8,7 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="simple_web_app" />
         <module name="simple_jsf_app" />
+        <module name="simple-jsf-app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="simple_jsf_app" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
