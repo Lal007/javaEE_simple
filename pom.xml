@@ -6,11 +6,16 @@
     <packaging>pom</packaging>
     <modules>
         <module>simple_web_app</module>
+        <module>simple_jsf_app</module>
     </modules>
 
     <groupId>ru.ee_simple_apps</groupId>
     <artifactId>EE_geek</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
 
 </project>
