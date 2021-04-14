@@ -21,8 +21,7 @@ public class ContextMenuView implements Serializable {
     @Inject
     private ProductRepository productRepository;
 
-    @PostConstruct
-    public void init() {
+    public void preloadData() {
         products = productRepository.findAll();
     }
 
