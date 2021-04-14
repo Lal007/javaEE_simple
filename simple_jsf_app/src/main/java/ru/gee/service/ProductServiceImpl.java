@@ -11,7 +11,6 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Stateless

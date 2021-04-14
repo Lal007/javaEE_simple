@@ -13,7 +13,7 @@ public class EjbClient {
     public static void main(String[] args) throws IOException, NamingException {
         Context context = createInitialContext();
 
-        String jndiServiceName = "ejb:/first-jsf-app/ProductServiceImpl!ru.geekbrains.service.ProductServiceRemote";
+        String jndiServiceName = "ejb:/simple-jsf-app/ProductServiceImpl!ru.geekbrains.service.ProductServiceRemote";
         ProductServiceRemote productService = (ProductServiceRemote) context.lookup(jndiServiceName);
 
         productService.findAllRemote()
