@@ -2,6 +2,8 @@ package ru.gee.persist;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -15,8 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@ApplicationScoped
-@Named
+@Stateless
 public class CategoryRepository {
     @PersistenceContext(unitName = "ds")
     private EntityManager em;
@@ -44,7 +45,7 @@ public class CategoryRepository {
         }
     }
 
-    @Transactional
+    @TransactionAttribute
     public void save(Category category) {
         if (category.getId() == null) {
             em.persist(category);
@@ -52,7 +53,7 @@ public class CategoryRepository {
         em.merge(category);
     }
 
-    @Transactional
+    @TransactionAttribute
     public void delete(Long id) {
         em.createNamedQuery("deleteCategoryById")
                 .setParameter("id", id)
@@ -69,5 +70,9 @@ public class CategoryRepository {
 
     public long count() {
         return em.createNamedQuery("countCategory", Long.class).getSingleResult();
+    }
+
+    public Category getReference(Long id) {
+        return em.getReference(Category.class, id);
     }
 }
