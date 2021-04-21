@@ -19,6 +19,11 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
+        id: mvn_build
+        run: |
+          mvn --batch-mode clean install
+
+      - name: Build with Maven
         id: mvn_build_1
         run: |
           cd simple_web_app
