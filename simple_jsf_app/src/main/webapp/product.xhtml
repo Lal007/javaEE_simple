@@ -1,6 +1,7 @@
 <html lang="en"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:pp="http://primefaces.org/ui">
 
 <h:head>
@@ -17,67 +18,60 @@
 
 <h:body>
 
-    <f:event listener="#{dtContextMenuView.preloadData}" type="preRenderView"/>
+    <f:event listener="#{productController.preloadData}" type="preRenderView"/>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">EShop</a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Product" outcome="/product"/>
-                </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Customer" outcome="/customer"/>
-                </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Category" outcome="/category"/>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <ui:include src="WEB-INF/fragments/header.xhtml">
+        <ui:param name="pageName" value="product"/>
+    </ui:include>
 
     <div class="container">
-        <div class="card">
-            <h:form id="form">
+        <div class="row py-2">
+            <h:form id="productTableForm">
                 <div class="col-12">
                     <h:commandButton value="Add Product" styleClass="btn btn-success"
                                      action="#{productController.addProduct()}"/>
                 </div>
 
-                <pp:dataTable id="products" var="product" value="#{dtContextMenuView.products}"
-                              rowKey="#{product.id}" selection="#{dtContextMenuView.selectedProduct}"
-                              selectionMode="single">
-                    <pp:column headerText="Id">
-                        <h:outputText value="#{product.id}"/>
-                    </pp:column>
-                    <pp:column headerText="Name">
-                        <h:outputText value="#{product.name}"/>
-                    </pp:column>
-                    <pp:column headerText="Description">
-                        <h:outputText value="#{product.description}"/>
-                    </pp:column>
-                    <pp:column headerText="Price">
-                        <h:outputText value="#{product.price}"/>
-                    </pp:column>
-                    <pp:column headerText="Actions">
-                        <h:commandButton value="Edit" styleClass="btn btn-success"
-                                         action="#{productController.editProduct(product)}"/>
-                        <h:commandButton value="Delete" styleClass="btn btn-danger"
-                                         action="#{productController.deleteProduct(product)}">
-                            <!--                                <f:ajax event="click" render="productTableForm"/>-->
-                        </h:commandButton>
-                    </pp:column>
-                </pp:dataTable>
-                <pp:contextMenu for="products">
-                    <pp:menuitem value="Delete" update="products" icon="pi pi-times"
-                                 action="#{dtContextMenuView.deleteProduct}"/>
-                </pp:contextMenu>
+                <div class="col-12">
+                    <h:dataTable value="#{productController.findAll()}" var="product"
+                                 styleClass="table table-bordered my-2">
+                        <h:column>
+                            <f:facet name="header">Id</f:facet>
+                            #{product.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            #{product.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Description</f:facet>
+                            #{product.description}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Category</f:facet>
+                            #{product.categoryName}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            #{product.price}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+
+                            <h:commandButton value="Edit" styleClass="btn btn-success"
+                                              action="#{productController.editProduct(product)}"/>
+                            <h:commandButton value="Delete" styleClass="btn btn-danger"
+                                              action="#{productController.deleteProduct(product)}">
+                                <f:ajax event="click" render="productTableForm"/>
+                            </h:commandButton>
+                            <h:commandButton value="Add to cart" styleClass="btn btn-success"
+                                             action="#{cartController.add(product)}">
+                                <f:ajax event="click"/>
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+
+                </div>
             </h:form>
         </div>
 
