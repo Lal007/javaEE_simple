@@ -3,6 +3,7 @@ package ru.gee.service;
 import ru.gee.persist.CategoryRepository;
 import ru.gee.persist.Product;
 import ru.gee.persist.ProductRepository;
+import ru.gee.rest.ProductResource;
 import ru.geekbrains.service.ProductServiceRemote;
 import ru.geekbrains.service.repr.ProductRepr;
 
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 @Remote(ProductServiceRemote.class)
-public class ProductServiceImpl implements ProductService, ProductServiceRemote {
+public class ProductServiceImpl implements ProductService, ProductServiceRemote, ProductResource {
 
     @EJB
     private ProductRepository productRepository;
@@ -38,6 +39,22 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
     @TransactionAttribute
     public void delete(Long id) {
         productRepository.delete(id);
+    }
+
+    @Override
+    public void insert(ProductRepr productRepr) {
+        if (productRepr.getId() != null) {
+            throw new IllegalArgumentException("Not null id in the insert Product method");
+        }
+        save(productRepr);
+    }
+
+    @Override
+    public void update(ProductRepr productRepr) {
+        if (productRepr.getId() != null) {
+            throw new IllegalArgumentException("Null id in the update Product method");
+        }
+        save(productRepr);
     }
 
     @Override
