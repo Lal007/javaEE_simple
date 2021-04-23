@@ -1,5 +1,6 @@
 package ru.gee.service;
 
+import ru.gee.persist.Category;
 import ru.gee.persist.CategoryRepository;
 import ru.gee.persist.Product;
 import ru.gee.persist.ProductRepository;
@@ -58,8 +59,34 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote,
     }
 
     @Override
+    public void insertCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    @Override
     public ProductRepr findById(long id) {
         return createProductReprWithCategory(productRepository.findById(id));
+    }
+
+    @Override
+    public ProductRepr findByName(String name) {
+        Product product = productRepository.findByName(name);
+        if (product == null) {
+            throw new IllegalArgumentException("No product with name = " + name);
+        }
+
+        return createProductReprWithCategory(product);
+    }
+
+    @Override
+    public List<ProductRepr> findByCategoryId(long categoryId) {
+        Category category = categoryRepository.findById(categoryId);
+        if (category == null) {
+            throw new IllegalArgumentException("No category found with id = " + categoryId);
+        }
+        return category.getProducts().stream()
+                .map(ProductServiceImpl::createProductReprWithCategory)
+                .collect(Collectors.toList());
     }
 
     @Override
