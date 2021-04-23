@@ -40,6 +40,7 @@ public interface ProductResource {
     void update(ProductRepr productRepr);
 
     @POST
+    @Path("newCategory")
     @Consumes(MediaType.APPLICATION_JSON)
     void insertCategory(Category category);
 
