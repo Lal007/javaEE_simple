@@ -1,8 +1,10 @@
 package ru.gee.service;
 
+import ru.gee.persist.Category;
 import ru.gee.persist.CategoryRepository;
 import ru.gee.persist.Product;
 import ru.gee.persist.ProductRepository;
+import ru.gee.rest.ProductResource;
 import ru.geekbrains.service.ProductServiceRemote;
 import ru.geekbrains.service.repr.ProductRepr;
 
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 @Remote(ProductServiceRemote.class)
-public class ProductServiceImpl implements ProductService, ProductServiceRemote {
+public class ProductServiceImpl implements ProductService, ProductServiceRemote, ProductResource {
 
     @EJB
     private ProductRepository productRepository;
@@ -41,8 +43,50 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
     }
 
     @Override
+    public void insert(ProductRepr productRepr) {
+        if (productRepr.getId() != null) {
+            throw new IllegalArgumentException("Not null id in the insert Product method");
+        }
+        save(productRepr);
+    }
+
+    @Override
+    public void update(ProductRepr productRepr) {
+        if (productRepr.getId() != null) {
+            throw new IllegalArgumentException("Null id in the update Product method");
+        }
+        save(productRepr);
+    }
+
+    @Override
+    public void insertCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    @Override
     public ProductRepr findById(long id) {
         return createProductReprWithCategory(productRepository.findById(id));
+    }
+
+    @Override
+    public ProductRepr findByName(String name) {
+        Product product = productRepository.findByName(name);
+        if (product == null) {
+            throw new IllegalArgumentException("No product with name = " + name);
+        }
+
+        return createProductReprWithCategory(product);
+    }
+
+    @Override
+    public List<ProductRepr> findByCategoryId(long categoryId) {
+        Category category = categoryRepository.findById(categoryId);
+        if (category == null) {
+            throw new IllegalArgumentException("No category found with id = " + categoryId);
+        }
+        return category.getProducts().stream()
+                .map(ProductServiceImpl::createProductReprWithCategory)
+                .collect(Collectors.toList());
     }
 
     @Override
