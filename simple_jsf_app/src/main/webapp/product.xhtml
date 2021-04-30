@@ -21,7 +21,7 @@
     <f:event listener="#{productController.preloadData}" type="preRenderView"/>
 
     <ui:include src="WEB-INF/fragments/header.xhtml">
-        <ui:param name="pageName" value="product"/>
+        <ui:param name="pageName" value="Product"/>
     </ui:include>
 
     <div class="container">
@@ -58,9 +58,9 @@
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
 
-                            <h:commandButton value="Edit" styleClass="btn btn-success"
+                            <h:commandButton value="Edit" styleClass="btn btn-success" rendered="#{request.isUserInRole('ADMIN')}"
                                               action="#{productController.editProduct(product)}"/>
-                            <h:commandButton value="Delete" styleClass="btn btn-danger"
+                            <h:commandButton value="Delete" styleClass="btn btn-danger" rendered="#{request.isUserInRole('ADMIN')}"
                                               action="#{productController.deleteProduct(product)}">
                                 <f:ajax event="click" render="productTableForm"/>
                             </h:commandButton>
