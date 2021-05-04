@@ -19,8 +19,24 @@
             <li class="nav-item #{pageName == 'Category' ? 'active' : ''}">
                 <h:link styleClass="nav-link" value="Category" outcome="/category"/>
             </li>
-            <li class="nav-item #{pageName == 'Cart' ? 'active' : ''}">
-                <h:link styleClass="nav-link" value="Category" outcome="/cart"/>
+            <li class="nav-item #{pageName == 'Customer' ? 'active' : ''}">
+                <h:link styleClass="nav-link" value="Customer" outcome="/customer"/>
+            </li>
+            <li class="nav-item #{pageName == 'User' ? 'active' : ''}">
+                <h:link styleClass="nav-link" value="User" outcome="/admin/user"/>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <h:link styleClass="btn btn-primary" rendered="#{request.userPrincipal == null}"
+                        value="Login" outcome="/login"/>
+
+                <h:form styleClass="ml-2">
+                    <h:commandLink styleClass="btn btn-primary" rendered="#{request.userPrincipal != null}"
+                                   action="#{userController.logout()}"
+                                   value="Logout #{request.remoteUser}"/>
+                </h:form>
             </li>
         </ul>
     </div>
